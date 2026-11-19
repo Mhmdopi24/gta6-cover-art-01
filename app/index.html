@@ -1,23 +1,98 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cover Snap</title>
-<link rel="stylesheet" href="./style.css">
+<title>Sunset Cover Studio — GTA-style cover art maker</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main class="app">
-  <section class="controls">
-    <h1>Cover Snap</h1>
-    <p>A photo and a caption, made into a square cover.</p>
-    <label>Photo <input id="photo" type="file" accept="image/*"></label>
-    <label>Caption <input id="caption" type="text" maxlength="40" value="Sunset Heist"></label>
-    <button id="export" type="button">Export PNG 1080 x 1080</button>
-    <p id="status" role="status"></p>
+<header class="top">
+  <h1>Sunset Cover Studio</h1>
+  <p class="tagline">Turn your photo into bold multi-panel poster art — offline, in seconds.</p>
+</header>
+
+<main class="layout">
+  <aside class="controls">
+    <section>
+      <h2>1 · Photos</h2>
+      <p class="hint">Your photos never leave this machine — they are read in your browser only.</p>
+      <label class="upload" for="photoInput" style="display:block;text-align:center;cursor:pointer">
+        Upload photo(s)…
+        <input id="photoInput" type="file" accept="image/*" multiple hidden>
+      </label>
+      <div class="row" style="margin-top:8px">
+        <button type="button" id="sample-boulevard">Boulevard sample</button>
+        <button type="button" id="sample-pier">Pier sample</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button type="button" id="fillBoth">Load both samples</button>
+        <button type="button" id="fillAllSamples">One photo, all panels</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>2 · Panels</h2>
+      <p class="hint">Click a panel in the preview to select it, then crop and position its photo. Drag the photo right in the preview to move it.</p>
+      <div class="row" id="panelButtons"></div>
+      <div class="slider-row"><span>Zoom</span>
+        <input id="zoomSlider" type="range" min="1" max="3" step="0.05" value="1">
+        <output id="zoomVal">100%</output>
+      </div>
+      <div class="slider-row"><span>Move X</span>
+        <input id="xSlider" type="range" min="-0.6" max="0.6" step="0.01" value="0">
+      </div>
+      <div class="slider-row"><span>Move Y</span>
+        <input id="ySlider" type="range" min="-0.6" max="0.6" step="0.01" value="0">
+      </div>
+      <label class="field" for="captionInput">Layout</label>
+      <div class="row">
+        <button type="button" class="chip" data-layout="hero">Hero split</button>
+        <button type="button" class="chip" data-layout="diagonal">Diagonal trio</button>
+        <button type="button" class="chip" data-layout="grid">Grid four</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>3 · Caption &amp; grade</h2>
+      <label class="field" for="captionInput">Caption</label>
+      <input id="captionInput" type="text" maxlength="28" value="SUNSET HEIST">
+      <label class="field" for="subInput">Tag line</label>
+      <input id="subInput" type="text" maxlength="48" value="NEON STREETS • SUMMER 2026">
+      <label class="field">Colour grade</label>
+      <div class="row">
+        <button type="button" class="chip grade-swatch" data-grade="sunset">🌇 Sunset</button>
+        <button type="button" class="chip grade-swatch" data-grade="neon">🌃 Neon night</button>
+        <button type="button" class="chip grade-swatch" data-grade="dusk">🌴 Palm dusk</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>4 · Export PNG</h2>
+      <div class="row">
+        <button type="button" class="chip" data-size="square">Square 1080×1080</button>
+        <button type="button" class="chip" data-size="portrait">Portrait 1080×1350</button>
+        <button type="button" class="chip" data-size="wide">Wide 1920×1080</button>
+      </div>
+      <div style="margin-top:10px">
+        <button type="button" class="primary" id="exportBtn">Download cover PNG</button>
+      </div>
+      <p class="status" id="statusLine" aria-live="polite"></p>
+    </section>
+  </aside>
+
+  <section class="preview">
+    <canvas id="coverCanvas" width="1920" height="1080"></canvas>
+    <p class="preview-note">Live preview — click a panel to select it, drag inside it to reposition the photo.</p>
   </section>
-  <canvas id="cover" width="1080" height="1080" aria-label="The cover"></canvas>
 </main>
-<script type="module" src="./src/main.js"></script>
+
+<footer class="foot">
+  Sunset Cover Studio — an original cover-art maker. Photos stay on your device.
+  No logos, artwork or fonts from any game are used. Works fully offline.
+</footer>
+
+<script src="src/cover.js"></script>
+<script src="src/main.js"></script>
 </body>
 </html>
